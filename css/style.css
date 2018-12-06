@@ -292,36 +292,15 @@ footer span, footer a{
 }
 
 
-
-.table_partidas{
-    width: 1030px;
+#tabla_partidas{
+    width: 900px;
+    margin: auto;
+    text-align: center;    
 }
-.th_part{
-    width:350px;
-    text-align:center;
-}
-.th_part_ch{
-    width:50px;
-    text-align:center;
-}
-#partidas{
-    background-color: rgb(168, 197, 245);
-    border-radius: 10px;
-    margin-top:100px;
-    margin-left: 153px;
-    width: 1030px;
+#tabla_partidas th{    
     text-align: center;
+    margin: auto;
 }
-.tabla_remove{
-    background-color: rgb(168, 197, 245);
-    border-radius: 10px;
-    margin-left:110px;    
-}
-
-#btn-modal{
-    margin-top: 100px;
-}
-
 /*#tabla_partidas td{
     text-align: center;
     border:1px solid red;    

@@ -131,7 +131,8 @@ header("Content-Type: text/html;charset=utf-8");
         <div class="col-md-12">
                <div class="loader col-md-12 text-center">
                      <img src="img/2.png" alt="Loading" height="25" width="25">
-                </div>                
+                </div>           
+                <button type="submit" id="btn-modRecep" class="btn btn-primary hidden">Generar modelo</button> 
                 <?php 
                 if($gestor_db == true) {
                 
@@ -151,16 +152,8 @@ header("Content-Type: text/html;charset=utf-8");
                 <!--                <input type="text" name="nombre" id="nombre" class="nombre hidden" value="" placeholder="# de cliente">            -->
         </div>
     </div>   
-    <div class="table-responsive" id="clieTable">
-    <div class="form-group col-md-2">
-       <label class="busqueda1">Busqueda:</label>
-       <input type="text" id="search" placeholder="Busqueda..." />
-       <label class="busquedacot hidden">Busqueda:</label>
-       <input type="text" id="searchcot" class="hidden" placeholder="Busqueda..." />
-       <label class="busquedaped hidden">Busqueda:</label>
-       <input type="text" id="searchped" class="hidden" placeholder="Busqueda..." />
-    </div>      
-    <table id="table_cli" class="table_clie">
+    <div class="table-responsive" id="clieTable">      
+    <table class="table_clie">
         <thead>
             <tr>
                 <th width="20%">CLAVE</th>
@@ -175,14 +168,12 @@ header("Content-Type: text/html;charset=utf-8");
     <ul id="cliepag" class="pagination"></ul>
     </div>    
     <div class="table-responsive" id="cotTable">
-    
-    <table id="tabla_cot" class="table_cotizaciones hidden">
+    <table class="table_cotizaciones hidden">
         <thead>
             <tr>
                 <th width="20%">CVE_DOC</th>
                 <th width="35%">CLIENTE</th>
                 <th width="15%">IMPORTE</th>
-                <th width="15%">FECHA</th>
                 <th width="10%">STATUS</th>                
             </tr>
         </thead>
@@ -191,15 +182,13 @@ header("Content-Type: text/html;charset=utf-8");
     </table>
     <ul id="cotpag" class="pagination hidden"></ul> 
     </div>
-    <div class="table-responsive" id="pedTable">    
-     <table id="table_pedidos" class="table_pedidos hidden">
+    <div class="table-responsive" id="pedTable">
+     <table class="table_pedidos hidden">
         <thead>
             <tr>
-                <th width="5%">CVE_DOC</th>
-                <th width="10%">STATUS</th>                
-                <th width="20%">DOC_SIG</th>
-                <th width="15%">FECHA</th>
-                <th width="10%">IMPORTE</th>
+                <th width="20%">CVE_DOC</th>
+                <th width="20%">STATUS</th>                
+                <th width="35%">DOC_SIG</th>
                 <th width="35%">CLIENTE</th>                               
             </tr>
         </thead>
@@ -221,47 +210,10 @@ header("Content-Type: text/html;charset=utf-8");
         <div class="form-group col-md-2">           
             <textarea id="observ_text" name="observ_text" placeholder="Observaciones Generales" cols="50" rows="2" class="hidden"></textarea>            
         </div>        
-        <button type="button" class="btn btn-primary" id="btn-modal" data-toggle="modal" data-target="#exampleModal">
-          Productos
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Selecciona el cliente</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">              
-               <?php 
-                if($gestor_db == true) {
-                
-                $sql = "SELECT DISTINCT(IV.CVE_ART),IV.DESCR,IV.EXIST,PP.PRECIO AS PRECIO FROM INVE01 IV
-                    LEFT JOIN PRECIO_X_PROD01 PP ON PP.CVE_ART = IV.CVE_ART
-                     WHERE PP.CVE_PRECIO = 1";
-                    //echo $sql;
-                $gestor_sent = ibase_query($gestor_db, $sql);
-                $coln = ibase_num_fields($gestor_sent);
-
-                echo "<select name='comboboxProd' id='combobox'>";
-                while ($row = ibase_fetch_object($gestor_sent)) {                    
-                    echo "<option name='".$row->CVE_ART."' value='".$row->DESCR."|".$row->PRECIO."'>".$row->DESCR."</option>";                    
-                }
-                echo "</select>"; 
-                }
-                ?>            
-              </div>
-              <div class="modal-footer">
-                <button type="button" id="modalSelect" class="btn btn-secondary" data-dismiss="modal">Seleccionar</button>                
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>                
-              </div>
-            </div>
-          </div>
+        <div class="form-group col-md-2">
+                          
         </div>
-        <!--<div id="content"></div>       
+        <div id="content"></div>       
       <table class="table_productos hidden">
         <thead>
             <tr>
@@ -288,7 +240,7 @@ header("Content-Type: text/html;charset=utf-8");
         <tbody class="list">
         </tbody>
     </table>
-    <ul class="pagination hidden"></ul>-->
+    <ul class="pagination hidden"></ul>
     </div>
     <div class="container hidden" id="form">
         <form id="alta-form" action="" method='POST' class="hidden">
@@ -300,7 +252,7 @@ header("Content-Type: text/html;charset=utf-8");
                     </div>
                     <div class="form-group col-md-4">
                         <label for="empresa">**Nombre:</label>
-                        <input type="text" class="datos-input" id="nombre_cli"  name="nombre_cli" placeholder="Obligatorio">
+                        <input type="text" class="datos-input" id="nombre_cli"  name="nombre_cli">
                     </div>
                 </div>
                 <div class="col-md-12 form-section" id="datos-empresa">                    
@@ -373,42 +325,55 @@ header("Content-Type: text/html;charset=utf-8");
                         <input type="text" class="datos-input" id="curp" name="curp">
                         </div>
                         <div class="form-group col-md-3">
-                        <label for="empresa" required>**Email</label>
-                        <input type="text" class="datos-input" id="email" name="email" placeholder="Obligatorio">
+                        <label for="empresa" required>Email</label>
+                        <input type="text" class="datos-input" id="email" name="email">
                         </div>
                         <div class="form-group col-md-3">
                         <label for="empresa" required>Página Web</label>
                         <input type="text" class="datos-input" id="web" name="web">
                         </div>                     
                         <div class="form-group col-md-2">
-                        <label for="empresa" required>**Teléfono</label>
-                        <input type="text" class="datos-input" id="tel" name="tel" placeholder="Obligatorio">
+                        <label for="empresa" required>Teléfono</label>
+                        <input type="text" class="datos-input" id="tel" name="tel">
                         </div>
-                    </div>                   
+                    </div>                     
 
                 <div class="col-md-12 text-center">
                     <button type="submit" class="btn btn-primary" id="insertar-cliente">Enviar</button>
-                </div>                   
+                </div> 
+                    
 			</form>
     </div>
     </div>
-   <!-- <div class="container">
+    <div class="container">
     <div class="col-md-12" id="Producto">
-    <button type="button" class="btn btn-primary hidden" id="mostrarProd">Ver pedido</button>
-    <button type="button" class="btn btn-danger hidden" id="borrarPed">Borrar</button>
-    <button type="submit" id="btn-modRecep" class="btn btn-primary hidden">Generar modelo</button> 
-    </div>-->
-    <div id="partidas" class="hidden">
-        <table class="table_partidas">
-            <th class="th_part">DESCRIPCION</th>
-            <th class="th_part">OBSERVACIONES</th>
-            <th class="th_part_ch">CANTIDAD</th>
-            <th class="th_part_ch">PRECIO</th>
-            <th class="th_part_ch">SUBTOTAL</th>
-            <th class="th_part_ch">EDICION</th>
+    <button type="button" class="btn btn-primary" id="mostrarProd">
+        Primary
+    </button>
+    <button type="button" class="btn btn-danger" id="borrarPed">
+        Borrar
+    </button>
+    </div>    
+    -<div class="table-responsive" id="partidasTable" style="background-color:pink;">
+        <table class="table_partidas" style=";background-color:blue;">
+            <th style="width:350px; border:1px solid blue;">
+                DESCRIPCION
+            </th>
+            <th >
+                OBSERVACIONES
+            </th>
+            <th>
+                CANTIDAD
+            </th>
+            <th>
+                PRECIO
+            </th>
+            <th>
+                TOTAL
+            </th>
         </table>
-    </div>   
-    <!--</div>-->
+    </div>
+    </div>
     
     
 
@@ -436,12 +401,10 @@ header("Content-Type: text/html;charset=utf-8");
 	</script>
     
     <!-- List JS -->
-    <script src="js/list.min.js"></script>    
+    <script src="js/list.min.js"></script>
 	
 	<!-- Main JS -->
     <script src="js/index.js"></script>
-    
-
 	
 	<!-- Pagination JS -->
 	<!--

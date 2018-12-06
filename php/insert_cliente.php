@@ -34,35 +34,28 @@ $gestor_db = ibase_connect($host,$username,$password,"UTF8");
         
         
         //echo "conexión exitosa\n";
-        $sql = "SELECT FIRST 1 ULT_CVE FROM TBLCONTROL01";        
-        //$sql = "SELECT FIRST 1 CLAVE FROM CLIE01  WHERE CLAVE like ' %' ORDER BY CLAVE DESC";
+        //$sql = "SELECT FIRST 1 CLAVE FROM CLIE01 ORDER BY CLAVE DESC";        
+        $sql = "SELECT FIRST 1 CLAVE FROM CLIE01  WHERE CLAVE like ' %' ORDER BY CLAVE DESC";
         $gestor_sent = ibase_query($gestor_db,$sql);
         //echo $gestor_sent;
         $coln = ibase_num_fields($gestor_sent);
         
         while($row = ibase_fetch_object($gestor_sent)) {
-            $contador = $row->ULT_CVE;
-        }//echo "contador es: $contador<br/>";
+            $contador = $row->CLAVE;
+        }//echo "contador es: $contador";
         $id = ++$contador;
         $str = intval($id);
-        if($str < 999){
-            $str = " "." "." "." "." "." "." ".$id;
-        }else{
-            $str = " "." "." "." "." "." ".$id;
-        }
-        
-        //echo $str."<br/>";
+        //$str = "         ".$id;
+        //echo $str;
         $data = random_bytes(16);
         $data[6] = chr(ord($data[6]) & 0x0f | 0x40); 
         $data[8] = chr(ord($data[8]) & 0x3f | 0x80); 
         $uuid = vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));    
         
         $datetime = gmdate("Y-m-d H:i:s");          
-        //echo "<br/>".$id;
-        
-        
+        //echo $id;      
 
-     $sqlInsert = "INSERT INTO CLIE01 (CLAVE, STATUS, NOMBRE, RFC, CALLE, NUMINT, NUMEXT, CRUZAMIENTOS, CRUZAMIENTOS2, COLONIA, CODIGO, LOCALIDAD, MUNICIPIO, ESTADO, PAIS, NACIONALIDAD, REFERDIR, TELEFONO, CLASIFIC, FAX, PAG_WEB, CURP, CVE_ZONA, IMPRIR, MAIL, NIVELSEC, ENVIOSILEN, EMAILPRED, DIAREV, DIAPAGO, CON_CREDITO, DIASCRED, LIMCRED, SALDO, LISTA_PREC, CVE_BITA, ULT_PAGOD, ULT_PAGOM, ULT_PAGOF, DESCUENTO, ULT_VENTAD, ULT_COMPM, FCH_ULTCOM, VENTAS, CVE_VEND, CVE_OBS, TIPO_EMPRESA, MATRIZ, PROSPECTO, CALLE_ENVIO, NUMINT_ENVIO, NUMEXT_ENVIO, CRUZAMIENTOS_ENVIO, CRUZAMIENTOS_ENVIO2, COLONIA_ENVIO, LOCALIDAD_ENVIO, MUNICIPIO_ENVIO, ESTADO_ENVIO, PAIS_ENVIO, CODIGO_ENVIO, CVE_ZONA_ENVIO, REFERENCIA_ENVIO, CUENTA_CONTABLE, ADDENDAF, ADDENDAD, NAMESPACE, METODODEPAGO, NUMCTAPAGO, MODELO, DES_IMPU1, DES_IMPU2, DES_IMPU3, DES_IMPU4, DES_PER, LAT_GENERAL, LON_GENERAL, LAT_ENVIO, LON_ENVIO, UUID, VERSION_SINC, USO_CFDI, CVE_PAIS_SAT, NUMIDREGFISCAL, FORMADEPAGOSAT) VALUES('$str', 'A', '$nombre_cli', '$RFC', '$calle', '$numint', '$numext', '$calle1', '$calle2', '$colonia', '$cp', '$poblacion', '$municipio', '$estado', '$pais', '$nacion', '$refer', '$tel', '$clasif', NULL, '$web', '$curp', '', 'S', 'S', 0, 'N', '$email', NULL, NULL, 'S', 0, 0, 0, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, NULL, 0, '$cve_vend', 0, 'M', ' 1', 'N', '$calle', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', 'N', 'N', 'N', 'N', 0, 0, 0, 0,'$uuid', '$datetime' , NULL, NULL, NULL, NULL)";
+        $sqlInsert = "INSERT INTO CLIE01 (CLAVE, STATUS, NOMBRE, RFC, CALLE, NUMINT, NUMEXT, CRUZAMIENTOS, CRUZAMIENTOS2, COLONIA, CODIGO, LOCALIDAD, MUNICIPIO, ESTADO, PAIS, NACIONALIDAD, REFERDIR, TELEFONO, CLASIFIC, FAX, PAG_WEB, CURP, CVE_ZONA, IMPRIR, MAIL, NIVELSEC, ENVIOSILEN, EMAILPRED, DIAREV, DIAPAGO, CON_CREDITO, DIASCRED, LIMCRED, SALDO, LISTA_PREC, CVE_BITA, ULT_PAGOD, ULT_PAGOM, ULT_PAGOF, DESCUENTO, ULT_VENTAD, ULT_COMPM, FCH_ULTCOM, VENTAS, CVE_VEND, CVE_OBS, TIPO_EMPRESA, MATRIZ, PROSPECTO, CALLE_ENVIO, NUMINT_ENVIO, NUMEXT_ENVIO, CRUZAMIENTOS_ENVIO, CRUZAMIENTOS_ENVIO2, COLONIA_ENVIO, LOCALIDAD_ENVIO, MUNICIPIO_ENVIO, ESTADO_ENVIO, PAIS_ENVIO, CODIGO_ENVIO, CVE_ZONA_ENVIO, REFERENCIA_ENVIO, CUENTA_CONTABLE, ADDENDAF, ADDENDAD, NAMESPACE, METODODEPAGO, NUMCTAPAGO, MODELO, DES_IMPU1, DES_IMPU2, DES_IMPU3, DES_IMPU4, DES_PER, LAT_GENERAL, LON_GENERAL, LAT_ENVIO, LON_ENVIO, UUID, VERSION_SINC, USO_CFDI, CVE_PAIS_SAT, NUMIDREGFISCAL, FORMADEPAGOSAT) VALUES('   $str', 'A', '$nombre_cli', '$RFC', '$calle', '$numint', '$numext', '$calle1', '$calle2', '$colonia', '$cp', '$poblacion', '$municipio', '$estado', '$pais', '$nacion', '$refer', '$tel', '$clasif', NULL, '$web', '$curp', '', 'S', 'S', 0, 'N', '$email', NULL, NULL, 'S', 0, 0, 0, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, NULL, 0, '$cve_vend', 0, 'M', ' 1', 'N', '$calle', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', 'N', 'N', 'N', 'N', 0, 0, 0, 0,'$uuid', '$datetime' , NULL, NULL, NULL, NULL)";
         //echo $sqlInsert;
         $gestor_sent = ibase_query($gestor_db, $sqlInsert);
         if(ibase_affected_rows()>0) {

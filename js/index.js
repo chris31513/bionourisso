@@ -25,22 +25,11 @@ $(document).ready(function() {
         $("#cotizaciones").css("background-color", "white");
         $("#pedidos").css("background-color", "white");
         $("#productos").css("background-color", "white");
-        $("#Alta").css("background-color", "white");        
+        $("#Alta").css("background-color", "white");
         $("#cliepag").removeClass("hidden");
         $("#cotpag").addClass("hidden");
         $("#pedipag").addClass("hidden");
-        $("#observ_part").addClass("hidden");
-        $("#partidas").addClass("hidden");
-        $(".t_partidas").addClass("hidden");
-        $(".busqueda").addClass("hidden");
-        $("#search").removeClass("hidden");
-        $(".busquedacot").addClass("hidden");
-        $("#searchcot").addClass("hidden");
-        $(".busqueda1").removeClass("hidden");
-        $(".busquedaped").addClass("hidden");
-        $("#searchped").addClass("hidden");
-        $("#mostrarProd").addClass("hidden");
-        $("#borrarPed").addClass("hidden");
+        $("#observ_part").addClass("hidden");        
     });
     $(document).on("click","#cotizaciones",function(){
        $(".table_cotizaciones").removeClass("hidden");
@@ -66,16 +55,6 @@ $(document).ready(function() {
         $("#cotpag").removeClass("hidden");
         $("#pedipag").addClass("hidden");
         $("#observ_part").addClass("hidden");
-        $("#partidas").addClass("hidden");
-        $(".t_partidas").addClass("hidden");
-        $("#search").addClass("hidden");
-        $(".busquedacot").removeClass("hidden");
-        $("#searchcot").removeClass("hidden");
-        $(".busqueda1").addClass("hidden");
-        $(".busquedaped").addClass("hidden");
-        $("#searchped").addClass("hidden");
-        $("#mostrarProd").addClass("hidden");        
-        $("#borrarPed").addClass("hidden"); 
     });
     $(document).on("click","#pedidos",function(){
        $(".table_clientes").addClass("hidden");
@@ -101,16 +80,6 @@ $(document).ready(function() {
         $("#cotpag").addClass("hidden");
         $("#pedipag").removeClass("hidden");
         $("#observ_part").addClass("hidden");
-        $("#partidas").addClass("hidden");
-        $(".t_partidas").addClass("hidden");
-        $("#search").addClass("hidden");
-        $(".busquedacot").addClass("hidden");
-        $("#searchcot").addClass("hidden");
-        $(".busqueda1").addClass("hidden");
-        $(".busquedaped").removeClass("hidden");
-        $("#searchped").removeClass("hidden");
-        $("#mostrarProd").addClass("hidden");        
-        $("#borrarPed").addClass("hidden"); 
     });
     $(document).on("click","#productos",function(){
        $("#btn-modRecep").removeClass("hidden");
@@ -138,16 +107,6 @@ $(document).ready(function() {
         $("#cotpag").addClass("hidden");
         $("#pedipag").addClass("hidden");
         $("#observ_part").removeClass("hidden");
-        $("#partidas").removeClass("hidden");
-        $(".t_partidas").removeClass("hidden");
-        $("#search").addClass("hidden");
-        $(".busquedacot").addClass("hidden");
-        $("#searchcot").addClass("hidden");
-        $(".busqueda1").addClass("hidden");
-        $(".busquedaped").addClass("hidden");
-        $("#searchped").addClass("hidden");
-        $("#mostrarProd").removeClass("hidden");        
-        $("#borrarPed").removeClass("hidden");         
     });
     $(document).on("click","#Alta",function(){
         $("#btn-modRecep").addClass("hidden");
@@ -175,18 +134,6 @@ $(document).ready(function() {
         $("#cotpag").addClass("hidden");
         $("#pedipag").addClass("hidden");
         $("#observ_part").addClass("hidden");
-        $("#partidas").addClass("hidden");
-        $(".t_partidas").addClass("hidden");
-        $("#search").addClass("hidden");
-        $(".busquedacot").addClass("hidden");
-        $("#searchcot").addClass("hidden");
-        $(".busqueda1").addClass("hidden");
-        $(".busquedaped").addClass("hidden");
-        $("#searchped").addClass("hidden");
-        $("#mostrarPed").addClass("hidden");        
-        $("#borrarPed").addClass("hidden");
-        $("#mostrarProd").addClass("hidden");        
-        $("#borrarPed").addClass("hidden"); 
     });
     
     $("#insertar-cliente").click(function(){        
@@ -271,27 +218,13 @@ $(document).ready(function() {
                 var entradas;                
                 for (var x in prods) {
                     if (prods[x]) {
-                        if(prods[x]["STATUS"] == 'E'){
-                            prods[x]["STATUS"] = 'Emitido';
-                            //console.log(prods[x]["STATUS"]);
-                        }else if(prods[x]["STATUS"] == 'O'){
-                            prods[x]["STATUS"] = 'Original';
-                        }else{
-                            prods[x]["STATUS"] = 'Cancelada';
-                        }
-                        
-                    if (prods[x]["DOC_SIG"] == null) {
-                        prods[x]["DOC_SIG"] = 'No hay';
-                        
-                    }
+                        //entradas = prods[x]["CVE_ART"];                        
                         
                         $("#pedTable tbody")
                             .append("<tr>"+
                                         "<td class='CVE_DOC'>"+prods[x]["CVE_DOC"]+"</td>"+
                                         "<td class='STATUS'>"+prods[x]["STATUS"]+"</td>"+
                                         "<td class='DOC_SIG'>"+prods[x]["DOC_SIG"]+"</td>"+
-                                        "<td class='FECHA'>"+prods[x]["FECHA"]+"</td>"+
-                                        "<td class='IMPORTE'>"+prods[x]["IMPORTE"]+"</td>"+
                                         "<td class='CLIENTE'>"+prods[x]["CLIENTE"]+"</td>"+                                        
                                     "</tr>");
                     }
@@ -299,7 +232,7 @@ $(document).ready(function() {
                 
                 //--Activa la búsqueda y paginación de la tabla de materiales para la remisión
                 pedTable = new List('pedTable', {
-                  valueNames: ['CVE_DOC','STATUS','DOC_SIG','FECHA','IMPORTE','CVE_DOC'],
+                  valueNames: ['CVE_DOC','STATUS','DOC_SIG','CVE_DOC'],
                   page: 15,
                   pagination: true
                 });                
@@ -318,26 +251,16 @@ $(document).ready(function() {
             //console.log(data);
             if (data != "0 results") {
                var prods = $.parseJSON(data);
-                var entradas;
-                var emitido;
+                var entradas;                
                 for (var x in prods) {
                     if (prods[x]) {
-                        if(prods[x]["STATUS"] == 'E'){
-                            prods[x]["STATUS"] = 'Emitido';
-                            //console.log(prods[x]["STATUS"]);
-                        }else if(prods[x]["STATUS"] == 'O'){
-                            prods[x]["STATUS"] = 'Original';
-                        }else{
-                            prods[x]["STATUS"] = 'Cancelada';
-                        }
-                        
+                        //entradas = prods[x]["CVE_ART"];                        
                         
                         $("#cotTable tbody")
                             .append("<tr>"+
                                         "<td class='CVE_DOC'>"+prods[x]["CVE_DOC"]+"</td>"+
                                         "<td class='CLIENTE'>"+prods[x]["CLIENTE"]+"</td>"+
                                         "<td class='IMPORTE'>"+prods[x]["IMPORTE"]+"</td>"+
-                                        "<td class='IMPORTE'>"+prods[x]["FECHA"]+"</td>"+
                                         "<td class='STATUS'>"+prods[x]["STATUS"]+"</td>"+                                      
                                     "</tr>");
                     }
@@ -402,7 +325,8 @@ $(document).ready(function() {
         recepTable.reindex();
         var items = recepTable.items;
         //console.log(items);
-        for (var x in items) {            
+        for (var x in items) {
+            
             cant = parseInt(items[x].values().cant);
             part = items[x].values().part;            
             precio = items[x].values().precio;
@@ -459,7 +383,7 @@ $(document).ready(function() {
         var subtotal;
         var art;
         var descr;
-        var td5;
+        
         
         prods.push({name: "subtotal",value:subtotal});
             
@@ -473,17 +397,18 @@ $(document).ready(function() {
             part = items[x].values().part;            
             precio = parseInt(items[x].values().PRECIO);
             subtotal = items[x].values().SUBTOTAL;
-            descr = items[x].values().DESCR;            
-             
+            descr = items[x].values().DESCR;
+            //console.log(cant);
             //console.log(part);
             if (!isNaN(cant) && cant > 0){                
-                console.log(cant);
+                /*var div = document.createElement("DIV");
+                var txt = document.createTextNode(descr+"//"+part+"//"+precio+"//"+subtotal);
+                div.setAttribute("style", "background-color: pink;");
+                div.setAttribute("ID","divdin");
+                div.setAttribute("class","clase");
+                div.appendChild(txt);
+                document.body.appendChild(div);   */
                 var div = document.createElement("DIV");
-                var div1 = document.createElement("DIV");
-                var div2 = document.createElement("DIV");
-                var div3 = document.createElement("DIV");
-                var div4 = document.createElement("DIV");
-                var div5 = document.createElement("DIV");
                 var tb = document.createElement("TABLE");
                 var tbody = document.createElement("TBODY");
                 var tr = document.createElement("TR");
@@ -492,24 +417,20 @@ $(document).ready(function() {
                 var td2 = document.createElement("TD");
                 var td3 = document.createElement("TD");
                 var td4 = document.createElement("TD");
-                var td5 = document.createElement("BUTTON");
-                
                 var txt = document.createTextNode(descr);
                 var txt1 = document.createTextNode(part);
                 var txt2 = document.createTextNode(cant);
                 var txt3 = document.createTextNode(precio);
                 var txt4 = document.createTextNode(subtotal);                
-                var txt5 = document.createTextNode("boton");                
-               
-                div.setAttribute("style","word-wrap: break-word;width:320px;text-align: justify;");
-                div1.setAttribute("style","word-wrap: break-word;width:350px;text-align: justify;margin-left:125px;");
-                div2.setAttribute("style","word-wrap: break-word;width:100px;text-align:center;margin-left:305px;");
-                div3.setAttribute("style","word-wrap: break-word;width:100px;;text-align: justify;margin-left:215px;text-align:center;");
-                div4.setAttribute("style","word-wrap: break-word;width:80px;text-align: justify;margin-left:130px;");
-                td5.setAttribute("class","editar");
-                
-                tb.setAttribute("class","t_partidas");tb.setAttribute("style","table-layout: fixed;margin-left:156px;width:1030px;background-color:#D8D8D8;border-bottom:1px solid black;");
-                tr.setAttribute("ID","clase");               
+                div.setAttribute("class","tabla_remove");div.setAttribute("ID","clieTable");
+                tb.setAttribute("class","table_partidas");tb.setAttribute("style","table-layout: fixed;overflow-x:hidden;")
+                tr.setAttribute("ID","clase");
+                td.setAttribute("class","tdclass");td.setAttribute("style","word-wrap: break-word;");
+                td1.setAttribute("class","tdclass");td1.setAttribute("style","word-wrap: break-word;border:1px solid red;");
+                td2.setAttribute("class","tdclass");
+                td3.setAttribute("class","tdclass");
+                td4.setAttribute("class","tdclass");
+                div.appendChild(tb);
                 tb.appendChild(tbody);
                 tbody.appendChild(tr);
                 tr.appendChild(td);
@@ -517,73 +438,26 @@ $(document).ready(function() {
                 tr.appendChild(td2);
                 tr.appendChild(td3);
                 tr.appendChild(td4);
-                tr.appendChild(td5);
-                td.appendChild(div);//div.appendChild(txt);
-                td1.appendChild(div1);
-                td2.appendChild(div2);
-                td3.appendChild(div3);
-                td4.appendChild(div4);
-                td5.appendChild(div5);
-                div.appendChild(txt);
-                div1.appendChild(txt1);
-                div2.appendChild(txt2);
-                //
-                div3.appendChild(txt3);
-                div4.appendChild(txt4);
-                div5.appendChild(txt5);
-               
-                document.body.appendChild(tb);               
-            }              
-        }    
+                td.appendChild(txt);
+                td1.appendChild(txt1);
+                td2.appendChild(txt2);
+                td3.appendChild(txt3);
+                td4.appendChild(txt4);
+                document.body.appendChild(div);
+            }
+        }       
     });
     $("#borrarPed").click(function(){
-        $(".t_partidas").remove();        
-    });
-   /* $(document).on("click",".editar",function(){
-        
-    });*/
-    
-    
-     $("#search").keyup(function(){
-        _this = this;
-        // Muestra los tr que concuerdan con la busqueda, y oculta los demás.
-        $.each($("#table_cli tbody tr"), function() {
-            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-               $(this).hide();
-            else
-               $(this).show();                
-        });
+        $(".tabla_remove").remove();        
     });
     
-    $("#searchcot").keyup(function(){
-        _this = this;
-        // Muestra los tr que concuerdan con la busqueda, y oculta los demás.
-        $.each($("#tabla_cot tbody tr"), function() {
-            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-               $(this).hide();
-            else
-               $(this).show();                
-        });
-    });
     
-    $("#searchped").keyup(function(){
-        _this = this;
-        // Muestra los tr que concuerdan con la busqueda, y oculta los demás.
-        $.each($("#table_pedidos tbody tr"), function() {
-            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
-               $(this).hide();
-            else
-               $(this).show();                
-        });
-    });
     
     //--Busca un material por clave de producto
     $("input[name='claveMat']").keyup(function() {
         $("input[name='descMat']").val("");
         recepTable.search($(this).val(), ['CVE_ART']);
     });
-    
-    
 
     //--Busca un material por descripción de producto
     $("input[name='descMat']").keyup(function() {
@@ -641,63 +515,6 @@ $(document).ready(function() {
         }
         });alert("Registro Insertado");
     }
-    
-    $("#modalSelect").click(function(){
-        console.log($('select[name="comboboxProd"] option:selected').text());
-        var div = document.createElement("DIV");
-        var divbtn = document.createElement("DIV");
-        
-        var tb = document.createElement("TABLE");
-        var tbody = document.createElement("TBODY");
-        var tr = document.createElement("TR");
-        var td = document.createElement("TD");
-        var td1 = document.createElement("TD");
-        var btn = document.createElement("BUTTON");
-        var input = document.createElement("INPUT");
-                
-        var txt = document.createTextNode($('select[name="comboboxProd"] option:selected').val());
-        var cadenaBio = $('select[name="comboboxProd"] option:selected').val();
-        //var txt1 = document.createTextNode($('select[name="comboboxProd"] option:selected').text());        
-        var txtbtn = document.createTextNode("boton");
-        var guion = "-";
-        function dividirCadena(cadenaBio,separador) {
-           var arrayDeCadenas = cadenaBio.split(separador);           
-           document.write("<table>");
-           document.write("<tr>");
-           for (var i=0; i < arrayDeCadenas.length; i++) {       
-                document.write("<td>"+arrayDeCadenas[i] + "</td>");       
-           }
-           document.write("</tr>");
-           document.write("</table>");
-        }
-        
-        
-        input.setAttribute("type","number");input.setAttribute("min","1");
-        btn.setAttribute("class", "btnclass");
-        div.setAttribute("style","display: flex;flex-direction: row;text-align: justify;");
-                                    
-        tb.setAttribute("class","t_partidas");tb.setAttribute("style","table-layout: fixed;margin-left:156px;width:1030px;background-color:#D8D8D8;border-bottom:1px solid black;");
-        td.setAttribute("style","width:100%;")
-        tr.setAttribute("ID","clase");
-        tb.appendChild(tbody);
-        tbody.appendChild(tr);
-        tr.appendChild(td);
-        tr.appendChild(btn);
-        td.appendChild(div);//div.appendChild(txt);
-      
-        btn.appendChild(divbtn);
-        div.appendChild(txt);
-        div.appendChild(input);
-        divbtn.appendChild(txtbtn);
-        //document.body.appendChild(input);
-        document.body.appendChild(tb);
-        document.body.appendChild(dividirCadena(cadenaBio, guion));
-    });    
-    
-    $(document).on("click",".btnclass",function(){
-        alert("fff");
-        console.log($(this).siblings().text());
-    });
         
         
         

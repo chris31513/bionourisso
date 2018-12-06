@@ -19,15 +19,14 @@ $cve_vend = $_SESSION['cve_vend'];
             }
         if($_SERVER['REQUEST_METHOD'] == "POST") {
             if (isset($_POST["get_pedidos"])){
-                $sql = "SELECT P.CVE_DOC,P.STATUS,P.DOC_SIG,SUBSTRING(P.FECHA_DOC FROM 1 for 11) AS FECHA,TRUNC(P.IMPORTE,2) AS IMPORTE,C.NOMBRE AS CLIENTE FROM FACTP01 P LEFT JOIN CLIE01 C ON P.CVE_CLPV = C.CLAVE WHERE C.CVE_VEND = '$cve_vend' ORDER BY P.FECHA_DOC DESC";
+                $sql = "SELECT P.CVE_DOC,P.STATUS,P.DOC_SIG,C.NOMBRE AS CLIENTE FROM FACTP01 P LEFT JOIN CLIE01 C ON P.CVE_CLPV = C.CLAVE WHERE C.CVE_VEND = '$cve_vend'";
                 //echo $sql;
             }    
         }    
                     
         if($_SERVER['REQUEST_METHOD'] == "POST") {
             if(isset($_POST["get_cotizaciones"])){
-                $sql = "SELECT F.CVE_DOC,C.NOMBRE AS CLIENTE,TRUNC(F.IMPORTE,2) AS IMPORTE,SUBSTRING(F.FECHA_DOC FROM 1 for 11) AS FECHA ,F.STATUS FROM FACTC01 F LEFT JOIN CLIE01 C ON F.CVE_CLPV = C.CLAVE WHERE C.CVE_VEND = '$cve_vend' ORDER BY F.FECHA_DOC DESC";
-                //echo $sql;
+                $sql = "SELECT F.CVE_DOC,C.NOMBRE AS CLIENTE,F.IMPORTE,F.STATUS FROM FACTC01 F LEFT JOIN CLIE01 C ON F.CVE_CLPV = C.CLAVE WHERE C.CVE_VEND = '$cve_vend'";
             }
         }
             
